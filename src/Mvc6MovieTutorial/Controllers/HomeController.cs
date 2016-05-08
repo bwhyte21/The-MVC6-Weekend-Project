@@ -15,7 +15,7 @@ namespace Mvc6MovieTutorial.Controllers
 
         public IActionResult About()
         {
-            ViewData["Message"] = "Your application description page.";
+            ViewData["Message"] = "This is a result of following an MVC 6 tutorial!";
 
             return View();
         }

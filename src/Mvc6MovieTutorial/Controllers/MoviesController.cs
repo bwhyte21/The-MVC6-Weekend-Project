@@ -3,6 +3,8 @@ using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.Data.Entity;
 using Mvc6MovieTutorial.Models;
+using Microsoft.AspNet.Http.Internal;
+using System.Collections.Generic;
 
 namespace Mvc6MovieTutorial.Controllers
 {
@@ -15,11 +17,47 @@ namespace Mvc6MovieTutorial.Controllers
             _context = context;    
         }
 
-        // GET: Movies
-        public IActionResult Index()
+        // GET: Movies/Index/
+        public IActionResult Index(string movieGenre, string searchString)
         {
-            return View(_context.Movie.ToList());
+            //get all genres from the DB
+            var genres = from m in _context.Movie
+                         orderby m.Genre
+                         select m.Genre;
+            //Get the Distinct list of genre to prevent dupes to store in a
+            // select list for a useful dropdown
+            var genreList = new List<string>();
+            genreList.AddRange(genres.Distinct());
+            ViewData["movieGenre"] = new SelectList(genreList);
+
+            //get all movies from the DB
+            var movies = from m in _context.Movie
+                         select m;
+
+            //see if the searchString param is not empty, constrain the query to limit
+            //the results to the search term
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                //query w/ lambda!
+                movies = movies.Where(s => s.Title.Contains(searchString));
+            }
+
+            //see if the movieGenre param is not empty, constrain the query to limit
+            //the results to the specified genre
+            if (!string.IsNullOrEmpty(movieGenre))
+            {
+                movies = movies.Where(x => x.Genre == movieGenre);
+            }
+
+            return View(movies);
         }
+        //
+        // POST: Movies
+        /*[HttpPost]
+        public string Index(FormCollection fc, string searchString)
+        {
+            return "From [HttpPost]Index: filter on " + searchString;
+        }*/
 
         // GET: Movies/Details/5
         public IActionResult Details(int? id)
@@ -47,7 +85,7 @@ namespace Mvc6MovieTutorial.Controllers
         // POST: Movies/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Movie movie)
+        public IActionResult Create([Bind("ID,Title,ReleaseDate,Genre,Price,Rating")] Movie movie)
         {
             if (ModelState.IsValid)
             {
@@ -77,7 +115,8 @@ namespace Mvc6MovieTutorial.Controllers
         // POST: Movies/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Movie movie)
+        public IActionResult Edit(
+            [Bind("ID,Title,ReleaseDate,Genre,Price,Rating")] Movie movie)//To protect ourself from over-posting, we add the Bind attribute
         {
             if (ModelState.IsValid)
             {
@@ -109,7 +148,7 @@ namespace Mvc6MovieTutorial.Controllers
         // POST: Movies/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed([Bind("ID,Title,ReleaseDate,Genre,Price,Rating")] int id)
         {
             Movie movie = _context.Movie.Single(m => m.ID == id);
             _context.Movie.Remove(movie);

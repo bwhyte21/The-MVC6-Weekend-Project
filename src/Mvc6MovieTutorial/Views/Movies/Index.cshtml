@@ -4,11 +4,20 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+<h2>Favourite Movie DB</h2>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+<form asp-controller="Movies" asp-action="Index" method="get" role="form">
+   <p>
+       Genre: @Html.DropDownList("movieGenre", "All")
+       Title: <input type="text" name="SearchString" />
+       <input type="submit" value="Filter" class="btn btn-primary" />
+   </p>
+</form>
+
 <table class="table">
     <tr>
         <th>
@@ -22,6 +31,9 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Rating)
         </th>
         <th></th>
     </tr>
@@ -39,6 +51,9 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Rating)
         </td>
         <td>
             <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |

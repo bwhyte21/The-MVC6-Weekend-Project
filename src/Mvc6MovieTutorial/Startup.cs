@@ -98,6 +98,9 @@ namespace Mvc6MovieTutorial
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            //Seed initializer
+            SeedData.Initialize(app.ApplicationServices);
         }
 
         // Entry point for the application.
