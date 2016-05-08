@@ -148,12 +148,12 @@ namespace Mvc6MovieTutorial.Controllers
         // POST: Movies/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed([Bind("ID,Title,ReleaseDate,Genre,Price,Rating")] int id)
+        public IActionResult DeleteConfirmed(int id)
         {
             Movie movie = _context.Movie.Single(m => m.ID == id);
             _context.Movie.Remove(movie);
             _context.SaveChanges();
-            return RedirectToAction("Index");
+            return new HttpStatusCodeResult((int)System.Net.HttpStatusCode.OK);
         }
     }
 }

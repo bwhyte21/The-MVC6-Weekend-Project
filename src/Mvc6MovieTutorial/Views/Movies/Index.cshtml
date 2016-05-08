@@ -6,10 +6,10 @@
 
 <h2>Favourite Movie DB</h2>
 
+@Html.AntiForgeryToken()
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-
 <form asp-controller="Movies" asp-action="Index" method="get" role="form">
    <p>
        Genre: @Html.DropDownList("movieGenre", "All")
@@ -56,9 +56,12 @@
             @Html.DisplayFor(modelItem => item.Rating)
         </td>
         <td>
-            <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-            <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-            <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+            <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-sm btn-success">Edit</a> |
+            <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-sm btn-info">Details</a> |
+            <div class="delete-section">
+                <a class="delete-link btn btn-sm btn-danger" href="@Url.Action("Delete", new { id = item.ID })">Delete</a>
+                <div class="btn btn-sm btn-primary delete-confirm" data-delete-id="@item.ID">Confirm Delete</div>
+            </div>
         </td>
     </tr>
 }
