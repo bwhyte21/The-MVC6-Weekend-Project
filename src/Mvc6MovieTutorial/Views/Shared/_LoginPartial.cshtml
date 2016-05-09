@@ -5,10 +5,50 @@
     <form asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" class="navbar-right">
         <ul class="nav navbar-nav navbar-right">
             <li>
-                <a asp-controller="Manage" asp-action="Index" title="Manage">Hello @User.GetUserName()!</a>
+                <p class="navbar-text">
+                    <div id="clockbox" class="navbar-text"></div>
+                </p>
             </li>
-            <li>
-                <button type="submit" class="btn btn-link navbar-btn navbar-link">Log off</button>
+            <li class="dropdown">
+                <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="glyphicon glyphicon-cloud"></i>
+                    <i class="glyphicon glyphicon-chevron-down"></i>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <span style="display: block !important; width: 180px; text-align: center; font-family: sans-serif; font-size: 12px;">
+                            <a href="http://www.wunderground.com/cgi-bin/findweather/getForecast?query=zmw:22202.2.99999&bannertypeclick=wu_macwhite" title="Crystal City, Virginia Weather Forecast" target="_blank">
+                                <img src="http://weathersticker.wunderground.com/weathersticker/cgi-bin/banner/ban/wxBanner?bannertype=wu_macwhite&airportcode=KDCA&ForcedCity=Crystal City&ForcedState=VA&zip=22202&language=EN" alt="Find more about Weather in Crystal City, VA" width="160" />
+                             </a>
+                            <br>
+                            <a href="http://www.wunderground.com/cgi-bin/findweather/getForecast?query=zmw:22202.2.99999&bannertypeclick=wu_macwhite" title="Get latest Weather Forecast updates" style="font-family: sans-serif; font-size: 12px" target="_blank">Click for weather forecast
+                            </a>
+                        </span>
+                    </li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
+                    @User.GetUserName()
+                    <i class="glyphicon glyphicon-chevron-down"></i>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="dropdown-header">Config</li>
+                    <li>
+                        <a asp-controller="Manage" asp-action="Index" title="Manage">My Profile</a>
+                    </li>
+                    <li><a href="#">My Blog</a></li>
+                    <li><a href="#">My Appointments</a></li>
+                    <li class="divider"></li>
+                    <li>
+                        <button type="submit" class="btn btn-danger center-block">
+                            <i class="glyphicon glyphicon-log-out"></i>
+                            Logout
+                        </button>
+                        @*<button type="submit" class="btn btn-link navbar-btn navbar-link">Log off</button>*@
+                    </li>
+                </ul>
+                
             </li>
         </ul>
     </form>
@@ -16,7 +56,14 @@
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li><a asp-controller="Account" asp-action="Register">Register</a></li>
-        <li><a asp-controller="Account" asp-action="Login">Log in</a></li>
+        <li>
+            <p class="navbar-text">
+                <div id="clockbox" class="navbar-text"></div>
+            </p>
+        </li>
+        <li><a asp-controller="Account" asp-action="Login">
+            <i class="glyphicon glyphicon-log-in"></i>
+            Log in
+            </a></li>
     </ul>
 }

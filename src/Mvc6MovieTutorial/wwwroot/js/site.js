@@ -1,4 +1,20 @@
 ﻿$(function () {
+    /* Clock functionality */
+    function GetClock() {
+        var d = new Date();
+        var nmonth = d.getMonth(), ndate = d.getDate(), nyear = d.getYear();
+        if (nyear < 1000) nyear += 1900;
+        var nhour = d.getHours(), nmin = d.getMinutes();
+        if (nmin <= 9) nmin = "0" + nmin
+
+        document.getElementById('clockbox').innerHTML = "" + (nmonth + 1) + "/" + ndate + "/" + nyear + " " + nhour + ":" + nmin + "";
+    }
+    window.onload = function () {
+        GetClock();
+        setInterval(GetClock, 1000);
+    }
+
+    /* For delete click */
     $("a.delete-link").click(function () {
         //Hide the delete button once clicked
         var deleteLink = $(this);
@@ -74,7 +90,6 @@
 
         return false;
     });
-
     AddAntiForgeryToken = function (data) {
         data.__RequestVerificationToken = $('input[name=__RequestVerificationToken]').val();
         return data;

@@ -15,8 +15,26 @@ namespace Mvc6MovieTutorial.Controllers
 
         public IActionResult About()
         {
-            ViewData["Message"] = "This is a result of following an MVC 6 tutorial!";
+            ViewData["Message"] = "About Page!";
 
+            return View();
+        }
+
+        public IActionResult News()
+        {
+            ViewData["Message"] = "News from CNN, VICE, or etc will stream on this page.";
+            return View();
+        }
+
+        public IActionResult Calendar()
+        {
+            ViewData["Message"] = "A useful personal planning page for appointments, events, etc..";
+            return View();
+        }
+
+        public IActionResult Projects()
+        {
+            ViewData["Message"] = "This is where you can place your portfolio.";
             return View();
         }
 
